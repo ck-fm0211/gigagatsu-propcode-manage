@@ -19,6 +19,8 @@ Google Apps Script（GAS）で稼動する。
   - 使用済み
 - [設定]シートのB1セルに[LINE Notify](https://notify-bot.line.me/ja/)のトークンを記載する。
 
+![\[コード一覧\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet1.png)  
+![\[設定\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet2.png)
 
 ## コード管理
 claspでGASからローカルにcloneし、それをGitHub（本リポジトリ）へpushしている。
