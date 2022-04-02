@@ -15,6 +15,7 @@ Google Apps Script（GAS）で稼動する。
   - メール受信日
   - コード
   - 容量
+  - 使用回数（同じプロモコードを複数回使用できる場合がある）
   - 利用期限
   - 使用済み
 - [設定]シートのB1セルに[LINE Notify](https://notify-bot.line.me/ja/)のトークンを記載する。
