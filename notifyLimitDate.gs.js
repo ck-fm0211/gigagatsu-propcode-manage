@@ -19,8 +19,8 @@ function notifyLimitDate() {
   let limitList = [];
   data.some(function(value) {
     // 期限が指定の日付以内 かつ チェックボックスにチェックが付いていない
-    if((value[4].getTime()<=dt.getTime())&&(!value[5])){
-      limitList.push([Utilities.formatDate(value[4], "JST", "yyyy/MM/dd"), value[2]])
+    if((value[5].getTime()<=dt.getTime())&&(!value[6])){
+      limitList.push([Utilities.formatDate(value[5], "JST", "yyyy/MM/dd"), value[2]])
     }
   });
   // 期限が近いものがある場合はLINEに通知する
