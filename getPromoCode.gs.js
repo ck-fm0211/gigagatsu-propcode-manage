@@ -3,8 +3,8 @@
  */
 
 // スプレッドシート
-const sheet = SpreadsheetApp.getActive().getSheetByName("コード一覧");
-const configSheet = SpreadsheetApp.getActive().getSheetByName("設定");
+const SHEET = SpreadsheetApp.getActive().getSheetByName("コード一覧");
+const CONFIG_SHEET = SpreadsheetApp.getActive().getSheetByName("設定");
 
 // 各列番号
 
@@ -96,23 +96,23 @@ function extractCode(message) {
  */
 function writeSheet(values) {
   // 処理日
-  const today = new Date();
+  const TODAY = new Date();
 
   // 最終行を取得
-  let lastRow = sheet.getLastRow() + 1;
+  let lastRow = SHEET.getLastRow() + 1;
 
   // セルを取得して値を転記
   // code["limitNumberOfTimes"]の回数だけ繰り返す。
   for (let i = 1; i <= Number(values["limitNumberOfTimes"]); i++) {
     let index = 0;
     for (let code of values["codes"]) {
-      sheet.getRange(lastRow + index, 1).setValue(today); // 記入日
-      sheet.getRange(lastRow + index, 2).setValue(values["receiveDate"]); // メール受信日
-      sheet.getRange(lastRow + index, 3).setValue(code); // プロモコード
-      sheet.getRange(lastRow + index, 4).setValue(getCodeAmount(code)); // 容量
-      sheet.getRange(lastRow + index, 5).setValue(i + "回目"); // 使用回数
-      sheet.getRange(lastRow + index, 6).setValue(values["limitDate"]); // 使用期限
-      sheet.getRange(lastRow + index, 7).insertCheckboxes(); // 使用済みチェックボックス
+      SHEET.getRange(lastRow + index, 1).setValue(TODAY); // 記入日
+      SHEET.getRange(lastRow + index, 2).setValue(values["receiveDate"]); // メール受信日
+      SHEET.getRange(lastRow + index, 3).setValue(code); // プロモコード
+      SHEET.getRange(lastRow + index, 4).setValue(getCodeAmount(code)); // 容量
+      SHEET.getRange(lastRow + index, 5).setValue(i + "回目"); // 使用回数
+      SHEET.getRange(lastRow + index, 6).setValue(values["limitDate"]); // 使用期限
+      SHEET.getRange(lastRow + index, 7).insertCheckboxes(); // 使用済みチェックボックス
       index += 1;
     }
     lastRow += 1;
@@ -140,7 +140,7 @@ function upsertConditionalFormatRule() {
   //   conditionalFormatRules.push(conditionalFormatRule)
   // }
   // 条件付き書式を設定
-  sheet.setConditionalFormatRules(conditionalFormatRules);
+  SHEET.setConditionalFormatRules(conditionalFormatRules);
 }
 
 /**
@@ -151,7 +151,7 @@ function getConditionalFormatRuleUsedCodes() {
   let conditionalFormatRule = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied("=$G1=TRUE")
     .setBackground("#474A4D")
-    .setRanges([sheet.getRange(1, 1, sheet.getLastRow() + 1, 7)])
+    .setRanges([SHEET.getRange(1, 1, SHEET.getLastRow() + 1, 7)])
     .build();
   return conditionalFormatRule;
 }
@@ -164,7 +164,7 @@ function getConditionalFormatRuleUnlimitedPromoCodes() {
   let conditionalFormatRule = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied('=find("無制限",$D1)')
     .setBackground("#DCDDDD")
-    .setRanges([sheet.getRange(1, 1, sheet.getLastRow() + 1, 7)])
+    .setRanges([SHEET.getRange(1, 1, SHEET.getLastRow() + 1, 7)])
     .build();
   return conditionalFormatRule;
 }
@@ -175,7 +175,7 @@ function getConditionalFormatRuleUnlimitedPromoCodes() {
  * 記入日列（A列）を除いて重複を排除する。
  */
 function removeDupilicatedRecords() {
-  let range = sheet.getRange(1, 1, sheet.getLastRow() + 1, 7);
+  let range = SHEET.getRange(1, 1, SHEET.getLastRow() + 1, 7);
 
   range.removeDuplicates([2, 3, 4, 5, 7]);
 }

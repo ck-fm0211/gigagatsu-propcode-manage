@@ -4,8 +4,8 @@
 
 // 処理日
 let dt = new Date();
-const limitDateCount = 7; // 7日以内
-dt.setDate(dt.getDate() + limitDateCount);
+const LIMIT_DATE_COUNT = 7; // 7日以内
+dt.setDate(dt.getDate() + LIMIT_DATE_COUNT);
 
 /**
  * スプレッドシートから指定の日付以内で期限が切れる未使用のプロモーションコードを抽出し、LINEに通知する
@@ -48,14 +48,14 @@ function sendLINE(limitList) {
     "\n" +
     String.fromCodePoint("0x26A0") +
     "有効期限が" +
-    limitDateCount +
+    LIMIT_DATE_COUNT +
     "日以内のものがあります";
   messageText += "\n\n";
   messageText += "■期限日：対象コード";
   messageText += limitMessageTemp.join("\n");
 
   // LINEから取得したトークン
-  let token = configSheet.getRange(1, 2).getValue();
+  let token = CONFIG_SHEET.getRange(1, 2).getValue();
   let options = {
     method: "post",
     headers: {
