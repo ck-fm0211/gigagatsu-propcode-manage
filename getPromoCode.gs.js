@@ -102,7 +102,7 @@ function writeSheet(values){
       sheet.getRange(lastRow + index, 1).setValue(today);                  // 記入日
       sheet.getRange(lastRow + index, 2).setValue(values["receiveDate"]);  // メール受信日
       sheet.getRange(lastRow + index, 3).setValue(code);                   // プロモコード
-      // sheet.getRange(lastRow + index, 4).setValue(email[1]);            // 容量 ※コードの仕様がわからんと入れられない
+      sheet.getRange(lastRow + index, 4).setValue(getCodeAmount(code));    // 容量
       sheet.getRange(lastRow + index, 5).setValue(i + "回目");              // 使用回数
       sheet.getRange(lastRow + index, 6).setValue(values["limitDate"]);    // 使用期限
       sheet.getRange(lastRow + index, 7).insertCheckboxes();               // 使用済みチェックボックス
@@ -143,4 +143,38 @@ function removeDupilicatedRecords(){
   let range = sheet.getRange(1,1,sheet.getLastRow() + 1, 7);
 
   range.removeDuplicates([2,3,4,5,7]);
+}
+
+/**
+ * プロモコードからコード容量を返却する。
+ * プロモコードの先頭文字列に対して以下の文字列を返却
+ *  300MB -> 300MB/3Days
+ *  U24   -> 無制限/24H
+ *  1GB   -> 1GB/7Days
+ *  3GB   -> 3GB/30Days
+ *  20MB  -> 20GB/30Days
+ */
+function getCodeAmount(code){
+
+  if(code.slice(0,5) == "300MB"){
+    return "300MB/3Days"
+  }
+
+  if(code.slice(0,3) == "U24"){
+    return "無制限/24H"
+  }
+
+  if(code.slice(0,3) == "1GB"){
+    return "1GB/7Days"
+  }
+
+  if(code.slice(0,3) == "3GB"){
+    return "3GB/30Days"
+  }
+
+  if(code.slice(0,4) == "20GB"){
+    return "20GB/30Days"
+  }
+
+  return "!!!!要確認!!!!"
 }
