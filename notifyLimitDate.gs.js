@@ -19,10 +19,17 @@ function notifyLimitDate() {
   let limitList = [];
   data.some(function (value) {
     // 期限が指定の日付以内 かつ チェックボックスにチェックが付いていない
-    if (value[5].getTime() <= dt.getTime() && !value[6]) {
+    if (
+      value[LIMIT_DATE_COLUMN_IDX - 1].getTime() <= dt.getTime() &&
+      !value[USED_FLAG_COLUMN_IDX - 1]
+    ) {
       limitList.push([
-        Utilities.formatDate(value[5], "JST", "yyyy/MM/dd"),
-        value[2],
+        Utilities.formatDate(
+          value[LIMIT_DATE_COLUMN_IDX - 1],
+          "JST",
+          "yyyy/MM/dd"
+        ),
+        value[PROMO_CODE_COLUMN_IDX - 1],
       ]);
     }
   });
