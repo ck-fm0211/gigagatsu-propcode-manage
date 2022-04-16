@@ -117,21 +117,46 @@ function writeSheet(values){
  * 条件：使用済み列（F列）がTRUE（チェックON） 書式: グレーアウト
  */
 function upsertConditionalFormatRule(){
-  let conditionalFormatRule = SpreadsheetApp.newConditionalFormatRule()
-  .whenFormulaSatisfied('=$G1=TRUE')
-  .setBackground('#B7B7B7')
-  .setRanges([sheet.getRange(1,1,sheet.getLastRow() + 1, 7)])
-  .build()
-  let conditionalFormatRules = sheet.getConditionalFormatRules();
-  if(conditionalFormatRules.length > 0){
-    // 既存の条件付き書式と差し替え
-    conditionalFormatRules.splice(conditionalFormatRules.length - 1, 1, conditionalFormatRule);
-  }else{
-    // 初回起動時には条件付き書式がないので直接push
-    conditionalFormatRules.push(conditionalFormatRule)
-  }
+  let conditionalFormatRuleUsedCodes = getConditionalFormatRuleUsedCodes()
+  let conditionalFormatRuleUnlimitedPromoCodes = getConditionalFormatRuleUnlimitedPromoCodes()
+  let conditionalFormatRules = [conditionalFormatRuleUsedCodes
+                                ,conditionalFormatRuleUnlimitedPromoCodes]
+  // let conditionalFormatRules = sheet.getConditionalFormatRules();
+  // if(conditionalFormatRules.length > 0){
+  //   // 既存の条件付き書式と差し替え
+  //   conditionalFormatRules.splice(conditionalFormatRules.length - 1, 1, conditionalFormatRule);
+  // }else{
+  //   // 初回起動時には条件付き書式がないので直接push
+  //   conditionalFormatRules.push(conditionalFormatRule)
+  // }
   // 条件付き書式を設定
   sheet.setConditionalFormatRules(conditionalFormatRules);
+}
+
+/**
+ * 条件付き書式オブジェクトを返却する
+ * 条件：使用済み列（F列）がTRUE（チェックON） 書式: グレーアウト
+ */
+function getConditionalFormatRuleUsedCodes(){
+  let conditionalFormatRule = SpreadsheetApp.newConditionalFormatRule()
+  .whenFormulaSatisfied('=$G1=TRUE')
+  .setBackground('#474A4D')
+  .setRanges([sheet.getRange(1,1,sheet.getLastRow() + 1, 7)])
+  .build()
+  return conditionalFormatRule
+}
+
+/**
+ * 条件付き書式オブジェクトを返却する
+ * 条件：容量列（D列）に「無制限」の文字がある 書式: 背景色を薄いグレー
+ */
+ function getConditionalFormatRuleUnlimitedPromoCodes(){
+  let conditionalFormatRule = SpreadsheetApp.newConditionalFormatRule()
+  .whenFormulaSatisfied('=find("無制限",$D1)')
+  .setBackground('#DCDDDD')
+  .setRanges([sheet.getRange(1,1,sheet.getLastRow() + 1, 7)])
+  .build()
+  return conditionalFormatRule
 }
 
 /**
