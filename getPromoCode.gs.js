@@ -3,8 +3,16 @@
  */
 
 // スプレッドシート
-const SHEET = SpreadsheetApp.getActive().getSheetByName("コード一覧");
-const CONFIG_SHEET = SpreadsheetApp.getActive().getSheetByName("設定");
+const MAIN_SHEET_NAME = "コード一覧";
+const CONFIG_SHEET_NAME = "設定";
+const USER_SHEET_NAME = "ユーザーリスト";
+const TEMPORARY_SHEET_NAME = "work";
+const SHEET = SpreadsheetApp.getActive().getSheetByName(MAIN_SHEET_NAME);
+const CONFIG_SHEET =
+  SpreadsheetApp.getActive().getSheetByName(CONFIG_SHEET_NAME);
+const USER_SHEET = SpreadsheetApp.getActive().getSheetByName(USER_SHEET_NAME);
+const TEMPORARY_SHEET =
+  SpreadsheetApp.getActive().getSheetByName(TEMPORARY_SHEET_NAME);
 
 // 各列番号
 const INSERT_DATE_COLUMN_IDX = 1; // 記入日
