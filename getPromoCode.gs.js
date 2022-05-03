@@ -154,14 +154,6 @@ function upsertConditionalFormatRule() {
     conditionalFormatRuleUsedCodes,
     conditionalFormatRuleUnlimitedPromoCodes,
   ];
-  // let conditionalFormatRules = sheet.getConditionalFormatRules();
-  // if(conditionalFormatRules.length > 0){
-  //   // 既存の条件付き書式と差し替え
-  //   conditionalFormatRules.splice(conditionalFormatRules.length - 1, 1, conditionalFormatRule);
-  // }else{
-  //   // 初回起動時には条件付き書式がないので直接push
-  //   conditionalFormatRules.push(conditionalFormatRule)
-  // }
   // 条件付き書式を設定
   SHEET.setConditionalFormatRules(conditionalFormatRules);
 }
@@ -175,7 +167,7 @@ function getConditionalFormatRuleUsedCodes() {
     .whenFormulaSatisfied("=$G1=TRUE")
     .setBackground("#474A4D")
     .setRanges([
-      SHEET.getRange(1, 1, SHEET.getLastRow() + 1, SHEET.getLastColumn() + 1),
+      SHEET.getRange(1, 1, SHEET.getLastRow() + 1, SHEET.getLastColumn()),
     ])
     .build();
   return conditionalFormatRule;
@@ -190,7 +182,7 @@ function getConditionalFormatRuleUnlimitedPromoCodes() {
     .whenFormulaSatisfied('=find("無制限",$D1)')
     .setBackground("#DCDDDD")
     .setRanges([
-      SHEET.getRange(1, 1, SHEET.getLastRow() + 1, SHEET.getLastColumn() + 1),
+      SHEET.getRange(1, 1, SHEET.getLastRow() + 1, SHEET.getLastColumn()),
     ])
     .build();
   return conditionalFormatRule;
