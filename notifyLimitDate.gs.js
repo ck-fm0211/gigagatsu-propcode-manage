@@ -12,9 +12,9 @@ dt.setDate(dt.getDate() + LIMIT_DATE_COUNT);
  */
 function notifyLimitDate() {
   console.log("[START]データ抽出");
-  let lastRow = sheet.getLastRow();
-  let lastColumn = sheet.getLastColumn();
-  let data = sheet.getRange(2, 1, lastRow - 1, lastColumn).getValues();
+  let lastRow = SHEET.getLastRow();
+  let lastColumn = SHEET.getLastColumn();
+  let data = SHEET.getRange(2, 1, lastRow - 1, lastColumn).getValues();
 
   let limitList = [];
   data.some(function (value) {
