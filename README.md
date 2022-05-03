@@ -22,13 +22,16 @@ Google Apps Script（GAS）で稼動する。
   - 使用済み
 - [設定]シートのB1セルに[LINE Notify](https://notify-bot.line.me/ja/)のトークンを記載する。
 
-![\[コード一覧\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet1.png)  
-![\[設定\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet2.png)
 
 ### プロモコード取得LineBot
-- [設定]シートのB2セルに[LINE Bot](https://developers.line.biz/ja/)のチャネルアクセストークを記載する。
+- [設定]シートのB2セルに[LINE Bot](https://developers.line.biz/ja/)のチャネルアクセストークンを記載する。
 - [ユーザーリスト]シートのA列に本LINE Botを利用できる`userId`を記載する。
 - 空の[work]シートを作成しておく
+
+![\[コード一覧\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet1.png)  
+![\[設定\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet2.png)
+![\[ユーザーリスト\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet3.png)  
+![\[work\]シート](https://github.com/ck-fm0211/gigakatsu-promocode-manage/blob/images/sheet4.png)
 
 #### 利用イメージ
 [![LINEBot動画](https://img.youtube.com/vi/iIJvWPahl04/0.jpg)](https://www.youtube.com/watch?v=iIJvWPahl04)
