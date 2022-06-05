@@ -91,7 +91,7 @@ function extractCode(message) {
   ret["codes"] = codes;
   // 入力期限
   let limitDate = plainBody.match(
-    /(?<=コードの入力期限\n*)20[0-9]{2}\/[0-9]{2}\/[0-9]{2}/g
+    /(?<=コードの入力期限\n*)20[0-9]{2}\/(0?[1-9]|1[0-2])\/[0-9]{2}/g
   );
   ret["limitDate"] = limitDate;
   //使用回数制限
