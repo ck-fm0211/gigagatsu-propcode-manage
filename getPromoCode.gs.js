@@ -81,14 +81,25 @@ function getPromotionCodes() {
 function extractCode(message) {
   let body = message.getBody();
   let plainBody = message.getPlainBody();
-
   let ret = {};
 
   // 形式:300MBXXXXXXXXX(300MBコード) or U24H10TXXXXXXXXX（24H使い放題10回分）
-  let codes = body.match(
-    /([1-9]{1}[A-Z0-9]{13}|U24H[0-9]{1,2}T[A-Z0-9]{9})(?=.*<\/strong>)/g
-  );
-  ret["codes"] = codes;
+  let pettern_300mb = /\b300MB[A-Z0-9]+\b/g;
+  let pettern_1gb = /\b1GB[A-Z0-9]+\b/g;
+  let pettern_3gb = /\b3GB[A-Z0-9]+\b/g;
+  let pettern_7gb = /\b7GB[A-Z0-9]+\b/g;
+  let pettern_20gb = /\b20GB[A-Z0-9]+\b/g;
+  let pettern_unlimit = /\bU24[A-Z0-9]*\b/g;
+
+  let matched_300mb = body.match(pettern_300mb) || [];
+  let matched_1gb = body.match(pettern_1gb) || [];
+  let matched_3gb = body.match(pettern_3gb) || [];
+  let matched_7gb = body.match(pettern_7gb) || [];
+  let matched_20gb = body.match(pettern_20gb) || [];
+  let matched_unlimit = body.match(pettern_unlimit) || [];
+
+  ret["codes"] = matched_300mb.concat(matched_1gb, matched_3gb, matched_7gb, matched_20gb, matched_unlimit)
+
   // 入力期限
   let limitDate = plainBody.match(
     /(?<=コードの入力期限\n*)20[0-9]{2}\/(0?[1-9]|1[0-2])\/[0-9]{2}/g
@@ -154,6 +165,14 @@ function upsertConditionalFormatRule() {
     conditionalFormatRuleUsedCodes,
     conditionalFormatRuleUnlimitedPromoCodes,
   ];
+  // let conditionalFormatRules = sheet.getConditionalFormatRules();
+  // if(conditionalFormatRules.length > 0){
+  //   // 既存の条件付き書式と差し替え
+  //   conditionalFormatRules.splice(conditionalFormatRules.length - 1, 1, conditionalFormatRule);
+  // }else{
+  //   // 初回起動時には条件付き書式がないので直接push
+  //   conditionalFormatRules.push(conditionalFormatRule)
+  // }
   // 条件付き書式を設定
   SHEET.setConditionalFormatRules(conditionalFormatRules);
 }
